@@ -21,8 +21,8 @@ public class Divisa {
 	 * @param cantidad Cantidad en la divisa actual.
 	 * @return valor en la divisa universal
 	 */
-	public int valorUniversal(int cantidad) {
-		return (int) (cantidad*getRate());
+	public int valorUniversal(int cantidad) { 
+		return (int)  (cantidad*getRate());
 		
 	
 	}
