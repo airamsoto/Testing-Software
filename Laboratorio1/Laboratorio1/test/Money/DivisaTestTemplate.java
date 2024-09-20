@@ -56,7 +56,7 @@ public class DivisaTestTemplate {
 	public void testValueEnEstaDivisa() {
 		//fail("No implementado");
 		assertEquals (13, this.SEK.valorEnEstaDivisa(10, DKK));
-		assertEquals (1, this.EUR.valorEnEstaDivisa(5, SEK), 1);
+		assertEquals (0, this.EUR.valorEnEstaDivisa(5, SEK));
 		assertEquals (60, this.DKK.valorEnEstaDivisa(8, EUR));
 	}
 
