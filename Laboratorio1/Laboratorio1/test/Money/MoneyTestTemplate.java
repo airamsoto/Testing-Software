@@ -30,51 +30,61 @@ public class MoneyTestTemplate {
 
 	@Test
 	public void testGetCantidad() {
-		fail("No implementado");
+		assertEquals(10000, SEK100.getCantidad());
+		assertEquals(1000, EUR10.getCantidad());
+		assertEquals(20000, SEK200.getCantidad());
+		assertEquals(-10000, SEKn100.getCantidad());
+		
 	}
 
 	@Test
 	public void testGetDivisa() {
-		fail("No implementado");
+		assertEquals (SEK, SEK100.getDivisa());
+		assertEquals (SEK, SEKn100.getDivisa());
+		assertEquals (EUR, EUR0.getDivisa());
 	}
-
+	  //Devuelve un String "cantidad nombre de divisa", e.g. "10.5 SEK".
+	  //Los numeros decimales se representan con enteros, e.g "10.5 SEK" se almacena como 1050
 	@Test
 	public void testToString() {
-		fail("No implementado");
+		assertEquals("10000 SEK", SEK100.toString());
 	}
 
 	@Test
 	public void testGlobalValue() {
-		fail("No implementado");
+		//fail("No implementado");
 	}
 
 	@Test
 	public void testEqualsMoney() {
-		fail("No implementado");
+		//fail("No implementado");
 	}
 
 	@Test
 	public void testAdd() {
-		fail("No implementado");
+		//fail("No implementado");
 	}
 
 	@Test
 	public void testSub() {
-		fail("No implementado");
+		//fail("No implementado");
 	}
 
 	@Test
 	public void testIsZero() {
-		fail("No implementado");
+		//fail("No implementado");
+		assertTrue(EUR0.isZero());
+		assertFalse(SEK100.isZero());
 	}
 
 	@Test
 	public void testNegate() {
-		fail("No implementado");
+		//fail("No implementado");
+		assertEquals(-SEK100.getCantidad(), SEK100.negate().getCantidad());
 	}
 
 	@Test
 	public void testCompareTo() {
-		fail("No implementado");		
+		assertEquals(0, SEK100.negate().compareTo(SEKn100));		
 	}
 }

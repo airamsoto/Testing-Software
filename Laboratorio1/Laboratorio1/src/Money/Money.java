@@ -39,7 +39,7 @@ public class Money implements Comparable {
 	 *  @return String con informaci�n de la moneda.
 	 */
 	public String toString() {
-		return getDivisa().getRate()+ " " + getDivisa().getName();
+		return cantidad + " " + getDivisa().getName();
 	}
 	
 	/**
@@ -67,7 +67,9 @@ public class Money implements Comparable {
 	 * @param Objeto Money a a�adir.
 	 * @return Un nuevo objeto Money con la divisa del actual, y la cantidad acumulada con el importe del objeto Money recibido.
 	 **/
-	public Money add(Money otra) {
+	public Money add(Money otra) { //TODO
+		Money m = new Money(otra.getCantidad() + getCantidad(), otra.getDivisa());
+		return m;
 		
 	}
 
@@ -77,7 +79,7 @@ public class Money implements Comparable {
 	 * @return True si cantidad es cero, false e.o.c.
 	 */
 	public Boolean isZero() {
-		return this.cantidad == 0;
+		return getCantidad() == 0;
 		
 
 	}
@@ -86,8 +88,9 @@ public class Money implements Comparable {
 	 * @return Un nuevo objeto Money con la cantidad en negativo
 	 */
 	public Money negate() {
+		Money m = new Money(-getCantidad(), getDivisa());
+		return m;
 		
-	
 	}
 	
 	/**
@@ -97,8 +100,9 @@ public class Money implements Comparable {
 	 * Un entero positivo si el objeto actual tiene m�s valor que el recibido
 	 */
 	public int compareTo(Object otra) {
-
-			
-		
+		Money other = (Money) otra;
+		if(other.getCantidad() == getCantidad()) return 0;
+		else if(other.getCantidad() > getCantidad()) return -1;
+		else return 1;
 	}
 }
