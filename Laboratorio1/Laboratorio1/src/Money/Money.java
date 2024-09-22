@@ -1,6 +1,6 @@
 package Money;
 
-public class Money implements Comparable {
+public class Money implements Comparable<Money> {
 	
 	private int cantidad;
 	private Divisa divisa;
@@ -20,7 +20,6 @@ public class Money implements Comparable {
 	 */
 	public int getCantidad() {
 		return cantidad;
-		
 	}
 	
 	/**
@@ -29,14 +28,13 @@ public class Money implements Comparable {
 	 */
 	public Divisa getDivisa() {
 		return divisa;
-		
 	}
 	
 	/**
 	 * Devuelve un String "cantidad nombre de divisa", e.g. "10.5 SEK".
 	 * Los numeros decimales se representan con enteros, e.g "10.5 SEK" se almacena como 1050
 	 * 
-	 *  @return String con informaci�n de la moneda.
+	 *  @return String con información de la moneda.
 	 */
 	public String toString() {
 		return cantidad + " " + getDivisa().getName();
@@ -48,61 +46,65 @@ public class Money implements Comparable {
 	 */
 	public int valorUniversal() {
 		return (int) (this.cantidad * this.divisa.getRate());
-		
 	}
 	
 	/**
 	 * Chequea si el valor universal de otro objeto Money es equivalente al actual
-	 * @param Objeto Money a comparar
+	 * @param otra Objeto Money a comparar
 	 * @return Boolean indicando equivalencia
 	 */
 	public Boolean equals(Money otra) {
 		return this.valorUniversal() == otra.valorUniversal();
-		
-		
 	}
 	
 	/**
-	 * A�ade un objeto Money al actual
-	 * @param Objeto Money a a�adir.
+	 * A�ade un objeto Money al actual.
+	 * Convierte el importe recibido a la divisa actual si es necesario.
+	 * @param otra Objeto Money a añadir.
 	 * @return Un nuevo objeto Money con la divisa del actual, y la cantidad acumulada con el importe del objeto Money recibido.
 	 **/
-	public Money add(Money otra) { //TODO
-		Money m = new Money(otra.getCantidad() + getCantidad(), otra.getDivisa());
-		return m;
-		
+	public Money add(Money otra) {
+		int cantidadConvertida = this.getDivisa().valorEnEstaDivisa(otra.getCantidad(), otra.getDivisa());
+		Money result = new Money(this.getCantidad() + cantidadConvertida, this.getDivisa());
+		return result;
 	}
 
-		
+	/**
+	 * Sustrae un objeto Money del actual.
+	 * Convierte el importe recibido a la divisa actual si es necesario.
+	 * @param otra Objeto Money a sustraer.
+	 * @return Un nuevo objeto Money con la divisa del actual, y la cantidad resultante.
+	 **/
+	public Money sub(Money otra) {
+		int cantidadConvertida = this.getDivisa().valorEnEstaDivisa(otra.getCantidad(), otra.getDivisa());
+		Money result = new Money(this.getCantidad() - cantidadConvertida, this.getDivisa());
+		return result;
+	}
+
 	/**
 	 * 
-	 * @return True si cantidad es cero, false e.o.c.
+	 * @return True si cantidad es cero, false en caso contrario.
 	 */
 	public Boolean isZero() {
 		return getCantidad() == 0;
-		
-
 	}
+
 	/**
 	 * Convierte la cantidad del objeto actual a negativo
 	 * @return Un nuevo objeto Money con la cantidad en negativo
 	 */
 	public Money negate() {
-		Money m = new Money(-getCantidad(), getDivisa());
-		return m;
-		
+		return new Money(-getCantidad(), getDivisa());
 	}
 	
 	/**
 	 * Compara dos objetos Money
 	 * @return 0  si sus valores son iguales
 	 * Un entero negativo si el objeto actual tiene menos valor que el recibido
-	 * Un entero positivo si el objeto actual tiene m�s valor que el recibido
+	 * Un entero positivo si el objeto actual tiene más valor que el recibido
 	 */
-	public int compareTo(Object otra) {
-		Money other = (Money) otra;
-		if(other.getCantidad() == getCantidad()) return 0;
-		else if(other.getCantidad() > getCantidad()) return -1;
-		else return 1;
+	@Override
+	public int compareTo(Money otra) {
+		return Integer.compare(this.valorUniversal(), otra.valorUniversal()); //funcion que devuelve lo de antes
 	}
 }
