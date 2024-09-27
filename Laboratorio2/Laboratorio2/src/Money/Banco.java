@@ -61,19 +61,20 @@ public class Banco {
 	 * @param cuentaid cuenta, titular nombre 
 	 * @throws CuentaExisteException si la cuenta ya existe
 	 */
+	//TODO deberia crear en vez de obtenerla
 	public void abrirCuenta(String titular, String cuentaid) throws CuentaExisteException {
 		if (listacuentas.containsKey(cuentaid)) {
 			throw new CuentaExisteException("Cuenta ya existe");
 		}
 		else {
-			 listacuentas.get(cuentaid);
+			 listacuentas.get(cuentaid); //listacuentas.put(cuentaid, new Cuenta(titular, divisa));
 		}
 	}
 	
 	
 	/**
 	 * Deposito dinero en una cuenta
-	 * @param cuentaid cuenta destino del depósito
+	 * @param cuentaid cuenta destino del depï¿½sito
 	 * @param cantidad deposito
 	 * @throws CuentaNoExisteException si la cuenta ya existe
 	 */
@@ -82,7 +83,7 @@ public class Banco {
 			throw new CuentaNoExisteException("Cuenta no existente");
 		}
 		else {
-			listacuentas.get(cuentaid).reintegro(cantidad);
+			listacuentas.get(cuentaid).reintegro(cantidad); //listacuentas.get(cuentaid).deposito(cantidad);
 		}
 	}
 	
@@ -96,7 +97,7 @@ public class Banco {
 	 */
 	public void reintegro(String cuentaid, Money cantidad) throws SaldoInsuficienteException, CuentaNoExisteException{
 		
-		listacuentas.get(cuentaid).deposito(cantidad);
+		listacuentas.get(cuentaid).deposito(cantidad); //listacuentas.get(cuentaid).reintegro(cantidad);
 	}
 	
 	/**
@@ -116,6 +117,9 @@ public class Banco {
 		else {
 			this.reintegro(decuenta,cantidad);
 			this.deposito(decuenta,cantidad);
+			
+			//listacuentas.get(decuenta).reintegro(cantidad);  
+			//listacuentas.get(tocuenta).deposito(cantidad);  
 		}
 	}
 
@@ -135,6 +139,9 @@ public class Banco {
 			
 			this.reintegro(decuenta,cantidad);
 			this.deposito(tocuenta,cantidad);
+			
+			//listacuentas.get(decuenta).reintegro(cantidad);
+			//tobanco.deposito(tocuenta, cantidad);     
 			
 		}		
 

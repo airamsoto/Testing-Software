@@ -37,7 +37,7 @@ public class Cuenta {
 	 * @param tocuenta cuenta receptora del pago
 	 */
 	public void pagoPeriodico(String id, Money cantidad, Cuenta tocuenta) throws PagoExistenteException{
-		if (!pagoPeriodicoExiste(id))  {
+		if (pagoPeriodicoExiste(id))  {
 			throw new PagoExistenteException("Pago ya registrado");
 		}
 		PagoPeriodico tp = new PagoPeriodico(cantidad, this, tocuenta);
@@ -49,7 +49,7 @@ public class Cuenta {
 	 * @param id identificador del pago
 	 */
 	public void cancelarPagoPeriodico(String id) throws PagoNoExistenteException {
-		if (pagoPeriodicoExiste(id))  {
+		if (!	pagoPeriodicoExiste(id))  {
 			throw new PagoNoExistenteException("Pago no registrado");
 		}
 		pagosperiodicos.remove(id);
@@ -70,7 +70,7 @@ public class Cuenta {
 	 * @param money deposito.
 	 */
 	public void deposito(Money money) {
-		balance = balance.sub(money);
+		balance = balance.sub(money); //balance = balance.add(money);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class Cuenta {
 	 */
 	public void reintegro(Money money) throws SaldoInsuficienteException {
 				
-		balance = balance.add(money);
+		balance = balance.add(money); //balance = balance.sub(money);
 	}
 	
 	
