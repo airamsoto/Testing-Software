@@ -70,7 +70,7 @@ public class Cuenta {
 	 * @param money deposito.
 	 */
 	public void deposito(Money money) {
-		balance = balance.sub(money); //balance = balance.add(money);
+		balance = balance.add(money);
 	}
 	
 	/**
@@ -79,8 +79,7 @@ public class Cuenta {
 	 * @throws SaldoInsuficienteException si no hay saldo suficiente
 	 */
 	public void reintegro(Money money) throws SaldoInsuficienteException {
-				
-		balance = balance.add(money); //balance = balance.sub(money);
+		balance = balance.sub(money);
 	}
 	
 	
