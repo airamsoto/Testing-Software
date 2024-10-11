@@ -1,106 +1,56 @@
 package Calc;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
+import org.junit.Before;
 import org.junit.*;
-import org.junit.rules.*;
-import Calc.Calculate;
-public class CalculateTest {
-	int month1;
-	int month2;
-	int days1;
-	int days2;
-	int year;
-	
-	
-	@Test
-	public void ct129 () throws Exception {
-		//mes 1 == mes 2 , creamos un objeto y ejecutamos el metodo
-		/*
-		 * mes1 = mes2 = 4
-		 * 
-		 * dia 1 = 20
-		 * dia 2 = 29
-		 * 
-		 * year = 2025
-		 *
-		 * 
-		 * 
-		 */
-		this.month1 = 4; this.month2 = 4; this.days1 = 20; this.days2 = 29;
-		this.year = 2025;
-		assertTrue(cal(month1, days1, month2, days2, year) == 9);
-	}
-	
-	
-	@Test
-	public void ct134679 () throws Exception {
-		/*
-		 * mes1 = 4 y mes2 = 5
-		 * 
-		 * dia 1 = 20
-		 * dia 2 = 29
-		 * 
-		 * year = 2025
-		 *
-		 * 
-		 * 
-		 */
-		this.month1 = 4; this.month2 = 5; this.days1 = 20; this.days2 = 29;
-		this.year = 2025;
-		assertTrue(cal(month1, days1, month2, days2, year)== 0);
-	}
-	
-	
-	
-	
-	@Test
-	public void ct13467879 () throws Exception {
-		//una vuelta al bucle, dos de diferencia
-		/*
-		 * month1 = marzo month2 = mayo
-		 * year 2025
-		 *
-		 * 
-		 * 
-		 */
-		this.month1 = 3; this.month2 = 5; this.days1 = 20; this.days2 = 29;
-		this.year = 2025;
-		cal(month1, days1, month2, days2, year);
-		
-	}
-	@Test
-	public void ct1356787879 () throws Exception {
-		//dos vueltas al bucle y leap year 2026 tres meses de diferencia
-		// creamos un objeto y ejecutamos el metodo
-		/*
-		 * month1 = marzo month2 = junio
-		 * year 2026
-		 * 
-		 */
-		this.month1 = 3; this.month2 = 6; this.days1 = 20; this.days2 = 29;
-		this.year = 2026;
-		cal(month1, days1, month2, days2, year);
-		
-	}
-	@Test
-	public void ct135679 () throws Exception {
-		//sin vueltas y leap year 2026
-		//creamos un objeto y ejecutamos el metodo
-	
-		/*
-		 * month 1 = marzo month 2 = abril
-		 * year = 2026
-		 *
-		 *
-		 * 
-		 * 
-		 */
-		this.month1 = 3; this.month2 = 4; this.days1 = 20; this.days2 = 29;
-		this.year = 2026;
-		cal(month1, days1, month2, days2, year);
-		
-	}
 
+
+public class CalculateTest{
+	
+	Calculate calculadora;
+	
+	@Before
+	public void setUp() throws Exception {
+		calculadora = new Calculate();
+	}
+	
+	@Test
+	public void TestCamino1(){ //camino test: [1-2-9] -> año bisiesto y mismo mes
+		assertTrue(calculadora.cal(6, 2, 6, 28, 2024) == 26);
+	}
+	
+	@Test 
+	public void TestCamino2(){ //camino test: [1-3-4-6-7-9] -> año no bisiesto mes de diferencia 1
+		assertTrue(calculadora.cal(3, 8, 4, 19, 2023) == 42);	
+	}
+	
+	@Test 
+	public void TestCamino3(){ //camino test: [1-3-5-6-7-9] -> año bisiesto mes de diferencia 1
+		assertTrue(calculadora.cal(3, 8, 4, 19, 2024) == 42);
+	}
+	
+	@Test
+	public void TestCamino4(){ //camino test: [1-3-4-6-7-8-7-9] -> año no bisiesto meses de diferencia 2
+		assertTrue(calculadora.cal(4, 3, 6, 6, 2022) == 64);
+	}
+	
+	@Test
+	public void TestCamino5(){ //camino test: [1-3-5-6-7-8-7-8-7-9] -> año bisiesto meses de diferencia 3
+		assertTrue(calculadora.cal(2, 28, 5, 17, 2024) == 79);
+	}
+	
+	//TEST QUE MATAN MUTAACIONES
+	@Test 
+	public void TestMt3(){ 
+		assertTrue(calculadora.cal(1, 8, 2, 19, 2023) == 42);	
+	}
+	@Test 
+	public void TestMt5(){ 
+		assertTrue(calculadora.cal(1, 8, 3, 19, 4000) == 722155);	
+	}
+	@Test 
+	public void TestMt7(){ 
+		assertTrue(calculadora.cal(1, 8, 3, 19, 2023) == 70);	
+	}
+	
 }
