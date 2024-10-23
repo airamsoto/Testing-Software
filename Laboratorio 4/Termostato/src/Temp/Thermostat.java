@@ -8,7 +8,7 @@ public class Thermostat
 {
    private int curTemp;          // temperatura actual
    private int thresholdDiff;    // difencia de temperatura para que salte el aire caliente
-   private int timeSinceLastRun; // tiempo desde que par� el calentador
+   private int timeSinceLastRun; // tiempo desde que par� el calentador
    private int minLag;           // tiempo de espera
    private boolean override;     // el usuario ha usado el mando
    private int overTemp;         // temperatura nueva
@@ -22,8 +22,14 @@ public class Thermostat
    public boolean turnHeaterOn (ProgrammedSetting pSet)
    
    {
-      int dTemp = pSet.getSetting (period, day);
+      int dTemp = pSet.getSetting (period, day); //obtenemos la temperatura deseada para ese dia y periodo
 
+      /*
+       * Si la temperatura actual es menor que la temperatura deseada menos el umbral de diferencia
+       * Si el usuario ha anulado la configuracion (override), la temperatura actual es menor que la temperatura de anulación (overTemp) menos la diferencia de umbral.
+	   * Además, el tiempo desde la última vez que se encendió el calentador (timeSinceLastRun) debe ser mayor que un mínimo (minLag).
+       */
+      
       if (((curTemp < dTemp - thresholdDiff) ||
            (override && curTemp < overTemp - thresholdDiff)) &&
            (timeSinceLastRun > minLag))
